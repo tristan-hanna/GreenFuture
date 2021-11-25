@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "674038079412",
+    "firebase_url": "https://green-future-cc3e6-default-rtdb.firebaseio.com",
+    "project_id": "green-future-cc3e6",
+    "storage_bucket": "green-future-cc3e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674038079412:android:24d1fb6f28f8a7e35d5ce1",
+        "android_client_info": {
+          "package_name": "com.example.greenfuture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674038079412-1nvhaish993bj487lp9ul2qe1nvn3eil.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATaW80VON-KEI139TEVjwQ8_gTc0hnc3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674038079412-1nvhaish993bj487lp9ul2qe1nvn3eil.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
