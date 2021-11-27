@@ -37,8 +37,7 @@ public class HumidityGraph extends AppCompatActivity {
         HumiditySeries = new LineGraphSeries();
         HumiditySeries.setDrawDataPoints(true);
         HumiditySeries.setDrawBackground(true);
-        //HumidityGraphView.getViewport().setYAxisBoundsManual(true);
-        //HumidityGraphView.getViewport().setMinY(0);
+        HumidityGraphView.setTitle("Humidity Graph");
         HumidityGraphView.addSeries(HumiditySeries);
 
         ConditionDatabase = FirebaseDatabase.getInstance();

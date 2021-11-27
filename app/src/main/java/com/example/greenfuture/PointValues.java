@@ -3,7 +3,7 @@ package com.example.greenfuture;
 public class PointValues {
     long m_time;
     int moisture;
-    int temp;
+    int temperature;
     int humidity;
 
     public PointValues(){
@@ -14,7 +14,7 @@ public class PointValues {
     {
         this.m_time = m_time;
         this.moisture = moisture;
-        this.temp = temp;
+        this.temperature = temp;
         this.humidity = humidity;
     }
 
@@ -30,7 +30,7 @@ public class PointValues {
 
     public int getTemp()
     {
-        return temp;
+        return temperature;
     }
 
     public int getHumidity()

@@ -38,6 +38,7 @@ public class MoistureGraph extends AppCompatActivity {
         MoistureSeries = new LineGraphSeries();
         MoistureSeries.setDrawDataPoints(true);
         MoistureSeries.setDrawBackground(true);
+        MoistureGraphView.setTitle("Moisture Graph");
         MoistureGraphView.addSeries(MoistureSeries);
 
         ConditionDatabase = FirebaseDatabase.getInstance();

@@ -37,6 +37,7 @@ public class TemperatureGraph extends AppCompatActivity {
         TemperatureSeries = new LineGraphSeries();
         TemperatureSeries.setDrawDataPoints(true);
         TemperatureSeries.setDrawBackground(true);
+        TemperatureGraphView.setTitle("Temperature Graph");
         TemperatureGraphView.addSeries(TemperatureSeries);
 
         ConditionDatabase = FirebaseDatabase.getInstance();
