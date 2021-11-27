@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,31 +18,33 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MoistureGraph extends AppCompatActivity {
+public class HumidityGraph extends AppCompatActivity {
 
     FirebaseDatabase ConditionDatabase;
-    DatabaseReference MoistureReference;
+    DatabaseReference HumidityReference;
 
-    GraphView MoistureGraphView;
-    LineGraphSeries MoistureSeries;
+    GraphView HumidityGraphView;
+    LineGraphSeries HumiditySeries;
 
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graph);
+        setContentView(R.layout.activity_humidity_graph);
 
-        MoistureGraphView = (GraphView) findViewById(R.id.MoistureGraphView);
-        MoistureSeries = new LineGraphSeries();
-        MoistureSeries.setDrawDataPoints(true);
-        MoistureSeries.setDrawBackground(true);
-        MoistureGraphView.addSeries(MoistureSeries);
+        HumidityGraphView = (GraphView) findViewById(R.id.HumidityGraphView);
+        HumiditySeries = new LineGraphSeries();
+        HumiditySeries.setDrawDataPoints(true);
+        HumiditySeries.setDrawBackground(true);
+        //HumidityGraphView.getViewport().setYAxisBoundsManual(true);
+        //HumidityGraphView.getViewport().setMinY(0);
+        HumidityGraphView.addSeries(HumiditySeries);
 
         ConditionDatabase = FirebaseDatabase.getInstance();
-        MoistureReference = ConditionDatabase.getReference("PCF");
+        HumidityReference = ConditionDatabase.getReference("DHT");
 
-        MoistureGraphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+        HumidityGraphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
                 if(isValueX){
@@ -60,7 +61,7 @@ public class MoistureGraph extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        MoistureReference.addValueEventListener(new ValueEventListener() {
+        HumidityReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 DataPoint[] dp = new DataPoint[(int) dataSnapshot.getChildrenCount()];
@@ -69,10 +70,10 @@ public class MoistureGraph extends AppCompatActivity {
                 for (DataSnapshot myDataSnapshot : dataSnapshot.getChildren())
                 {
                     PointValues pointValues = myDataSnapshot.getValue(PointValues.class);
-                    dp[index] = new DataPoint(pointValues.getM_time(), pointValues.getMoisture());
+                    dp[index] = new DataPoint(pointValues.getM_time(), pointValues.getHumidity());
                     index++;
                 }
-                MoistureSeries.resetData(dp);
+                HumiditySeries.resetData(dp);
             }
 
             @Override

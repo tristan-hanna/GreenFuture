@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenFuture">
         <activity
+            android:name=".HumidityGraph"
+            android:exported="true" />
+        <activity
+            android:name=".TemperatureGraph"
+            android:exported="true" />
+        <activity
             android:name=".MoistureGraph"
             android:exported="true" />
         <activity

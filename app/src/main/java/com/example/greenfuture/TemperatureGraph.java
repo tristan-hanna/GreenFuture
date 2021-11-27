@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,31 +18,31 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MoistureGraph extends AppCompatActivity {
+public class TemperatureGraph extends AppCompatActivity {
 
     FirebaseDatabase ConditionDatabase;
-    DatabaseReference MoistureReference;
+    DatabaseReference TemperatureReference;
 
-    GraphView MoistureGraphView;
-    LineGraphSeries MoistureSeries;
+    GraphView TemperatureGraphView;
+    LineGraphSeries TemperatureSeries;
 
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graph);
+        setContentView(R.layout.activity_temperature_graph);
 
-        MoistureGraphView = (GraphView) findViewById(R.id.MoistureGraphView);
-        MoistureSeries = new LineGraphSeries();
-        MoistureSeries.setDrawDataPoints(true);
-        MoistureSeries.setDrawBackground(true);
-        MoistureGraphView.addSeries(MoistureSeries);
+        TemperatureGraphView = (GraphView) findViewById(R.id.TemperatureGraphView);
+        TemperatureSeries = new LineGraphSeries();
+        TemperatureSeries.setDrawDataPoints(true);
+        TemperatureSeries.setDrawBackground(true);
+        TemperatureGraphView.addSeries(TemperatureSeries);
 
         ConditionDatabase = FirebaseDatabase.getInstance();
-        MoistureReference = ConditionDatabase.getReference("PCF");
+        TemperatureReference = ConditionDatabase.getReference("DHT");
 
-        MoistureGraphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+        TemperatureGraphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
                 if(isValueX){
@@ -60,7 +59,7 @@ public class MoistureGraph extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        MoistureReference.addValueEventListener(new ValueEventListener() {
+        TemperatureReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 DataPoint[] dp = new DataPoint[(int) dataSnapshot.getChildrenCount()];
@@ -69,10 +68,10 @@ public class MoistureGraph extends AppCompatActivity {
                 for (DataSnapshot myDataSnapshot : dataSnapshot.getChildren())
                 {
                     PointValues pointValues = myDataSnapshot.getValue(PointValues.class);
-                    dp[index] = new DataPoint(pointValues.getM_time(), pointValues.getMoisture());
+                    dp[index] = new DataPoint(pointValues.getM_time(), pointValues.getTemp());
                     index++;
                 }
-                MoistureSeries.resetData(dp);
+                TemperatureSeries.resetData(dp);
             }
 
             @Override

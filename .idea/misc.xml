@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/GreenFuture/app/src/main/res/layout/activity_graph.xml" value="0.36666666666666664" />
+        <entry key="..\:/GreenFuture/app/src/main/res/layout/activity_humidity_graph.xml" value="0.36666666666666664" />
         <entry key="..\:/GreenFuture/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/GreenFuture/app/src/main/res/layout/activity_temperature_graph.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
