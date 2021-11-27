@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 double cur_moisture = (Double) dataSnapshot.child("moisture").getValue();
-                CurrentMoisture.setText(Integer.toString((int) cur_moisture) + "g/m³");
+                CurrentMoisture.setText(Integer.toString((int) cur_moisture) + " g/m³");
             }
 
             @Override
@@ -125,18 +125,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        SetPlantTime.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                long fire_time = (Long) dataSnapshot.child("plantTime").getValue();
-//                String cur_time = sdf.format(new Date((long) fire_time));
-//                PlantTime.setText(cur_time);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+        SetPlantTime.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long fire_time = (Long) dataSnapshot.child("plantTime").getValue();
+                fire_time = fire_time * 1000;
+                String cur_time = sdf.format(new Date((long) fire_time));
+                PlantTime.setText(cur_time);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
