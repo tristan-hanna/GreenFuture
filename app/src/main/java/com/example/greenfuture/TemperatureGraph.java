@@ -20,12 +20,16 @@ import java.util.Date;
 
 public class TemperatureGraph extends AppCompatActivity {
 
+    //Creates a connection to the Firebase database and initializes the
+    //reference to it
     FirebaseDatabase ConditionDatabase;
     DatabaseReference TemperatureReference;
 
+    //Initializes graph and series
     GraphView TemperatureGraphView;
     LineGraphSeries TemperatureSeries;
 
+    //Initializes format for time
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
     @Override
@@ -33,6 +37,7 @@ public class TemperatureGraph extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_graph);
 
+        //Formats graph
         TemperatureGraphView = (GraphView) findViewById(R.id.TemperatureGraphView);
         TemperatureSeries = new LineGraphSeries();
         TemperatureSeries.setDrawDataPoints(true);
@@ -40,9 +45,11 @@ public class TemperatureGraph extends AppCompatActivity {
         TemperatureGraphView.setTitle("Temperature Graph");
         TemperatureGraphView.addSeries(TemperatureSeries);
 
+        //Creates instance of database and connects to DHT node
         ConditionDatabase = FirebaseDatabase.getInstance();
         TemperatureReference = ConditionDatabase.getReference("DHT");
 
+        //Formats x axis
         TemperatureGraphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
@@ -60,6 +67,7 @@ public class TemperatureGraph extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //Populates graph with data from Firebase
         TemperatureReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

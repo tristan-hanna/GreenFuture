@@ -10,6 +10,7 @@ public class PointValues {
 
     }
 
+    //Constructor
     public PointValues(long m_time, int moisture, int temp, int humidity)
     {
         this.m_time = m_time;
@@ -18,6 +19,7 @@ public class PointValues {
         this.humidity = humidity;
     }
 
+    //Gets that retrieve data from database
     public long getM_time()
     {
         return m_time * 1000;

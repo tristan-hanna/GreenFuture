@@ -20,6 +20,8 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Creates a connection to the Firebase database and attaches the
+    //database references to it
     FirebaseDatabase ConditionDatabase;
 
     DatabaseReference SetMoistureReference;
@@ -27,14 +29,20 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference SetHumidityReference;
     DatabaseReference SetPlantTime;
 
+    //Initializes buttons that take the user to the different
+    //graphs
     Button ToMoistureGraph;
     Button ToTemperatureGraph;
     Button ToHumidityGraph;
+
+    //Initializes textviews that set the current readings from the
+    //sensors
     TextView CurrentMoisture;
     TextView CurrentTemp;
     TextView CurrentHumidity;
     TextView PlantTime;
 
+    //Initializes format for time
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
     @Override
@@ -44,16 +52,19 @@ public class MainActivity extends AppCompatActivity {
 
         ConditionDatabase = FirebaseDatabase.getInstance();
 
+        //Connects the references to specific points in the database
         SetMoistureReference = ConditionDatabase.getReference("Set_Moisture");
         SetTempReference = ConditionDatabase.getReference("Set_TH");
         SetHumidityReference = ConditionDatabase.getReference("Set_TH");
         SetPlantTime = ConditionDatabase.getReference("Set_Time");
 
+        //Connects textviews
         CurrentMoisture = findViewById(R.id.CurrentMoisture);
         CurrentTemp = findViewById(R.id.CurrentTemp);
         CurrentHumidity = findViewById(R.id.CurrentHumidity);
         PlantTime = findViewById(R.id.PlantTime);
 
+        //Sets buttons to take users to graphs
         ToMoistureGraph = findViewById(R.id.ToMoistureGraph);
         ToMoistureGraph.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //Retrieves realtime data from database so that it could be passed to the
+        //textviews
         SetMoistureReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -129,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long fire_time = (Long) dataSnapshot.child("plantTime").getValue();
-                fire_time = fire_time * 1000;
-                String cur_time = sdf.format(new Date((long) fire_time));
+                fire_time = fire_time * 1000;   //Converts time from python in seconds to milliseconds
+                String cur_time = sdf.format(new Date((long) fire_time)); //Formats time as a String
                 PlantTime.setText(cur_time);
             }
 

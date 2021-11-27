@@ -20,12 +20,16 @@ import java.util.Date;
 
 public class HumidityGraph extends AppCompatActivity {
 
+    //Creates a connection to the Firebase database and initializes the
+    //reference to it
     FirebaseDatabase ConditionDatabase;
     DatabaseReference HumidityReference;
 
+    //Initializes graph and series
     GraphView HumidityGraphView;
     LineGraphSeries HumiditySeries;
 
+    //Initializes format for time
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
     @Override
@@ -33,6 +37,7 @@ public class HumidityGraph extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_humidity_graph);
 
+        //Formats graph
         HumidityGraphView = (GraphView) findViewById(R.id.HumidityGraphView);
         HumiditySeries = new LineGraphSeries();
         HumiditySeries.setDrawDataPoints(true);
@@ -40,9 +45,11 @@ public class HumidityGraph extends AppCompatActivity {
         HumidityGraphView.setTitle("Humidity Graph");
         HumidityGraphView.addSeries(HumiditySeries);
 
+        //Creates instance of database and connects to DHT node
         ConditionDatabase = FirebaseDatabase.getInstance();
         HumidityReference = ConditionDatabase.getReference("DHT");
 
+        //Formats x axis
         HumidityGraphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
@@ -60,6 +67,7 @@ public class HumidityGraph extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //Populates graph with data from Firebase
         HumidityReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

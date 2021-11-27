@@ -21,12 +21,16 @@ import java.util.Date;
 
 public class MoistureGraph extends AppCompatActivity {
 
+    //Creates a connection to the Firebase database and initializes the
+    //reference to it
     FirebaseDatabase ConditionDatabase;
     DatabaseReference MoistureReference;
 
+    //Initializes graph and series
     GraphView MoistureGraphView;
     LineGraphSeries MoistureSeries;
 
+    //Initializes format for time
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
     @Override
@@ -34,6 +38,7 @@ public class MoistureGraph extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
+        //Formats graph
         MoistureGraphView = (GraphView) findViewById(R.id.MoistureGraphView);
         MoistureSeries = new LineGraphSeries();
         MoistureSeries.setDrawDataPoints(true);
@@ -41,9 +46,11 @@ public class MoistureGraph extends AppCompatActivity {
         MoistureGraphView.setTitle("Moisture Graph");
         MoistureGraphView.addSeries(MoistureSeries);
 
+        //Creates instance of database and connects to PCF node
         ConditionDatabase = FirebaseDatabase.getInstance();
         MoistureReference = ConditionDatabase.getReference("PCF");
 
+        //Formats x axis
         MoistureGraphView.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
@@ -61,6 +68,7 @@ public class MoistureGraph extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //Populates graph with data from Firebase
         MoistureReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
